@@ -33,6 +33,33 @@ int main()
     cin>>t; //input testcases
     while(t--) //while testcases exist
     {
+
+public class ReverseString {
+    public static void main(String[] args) {
+        String originalString = "Hello World";
+
+        // Using StringBuffer class
+        String reversedString = new StringBuffer(originalString).reverse().toString();
+        System.out.println("Reversed String (StringBuffer): " + reversedString);
+
+        // Using StringBuilder class
+        reversedString = new StringBuilder(originalString).reverse().toString();
+        System.out.println("Reversed String (StringBuilder): " + reversedString);
+
+        // Using Recursion
+        reversedString = reverseStringRecursion(originalString);
+        System.out.println("Reversed String (Recursion): " + reversedString);
+    }
+
+    public static String reverseStringRecursion(String originalString) {
+        if (originalString.isEmpty()) {
+            return originalString;
+        }
+        return reverseStringRecursion(originalString.substring(1)) + originalString.charAt(0);
+    }
+}
+
+
         
         cin>>n; //input size of array
         
