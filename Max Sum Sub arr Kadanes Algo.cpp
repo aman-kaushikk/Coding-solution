@@ -73,4 +73,29 @@ public class ReverseString {
         cout << ob.maxSubarraySum(a, n) << endl;
     }
 }
-  // } Driver Code Ends
+  // } Driver Code End
+
+
+
+import java.text.DecimalFormat;
+
+public class LoanRepayment {
+    public static void main(String[] args) {
+        double loanAmount = 10000;
+        double interestRate = 10;
+        int loanTerm = 12;
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+        System.out.println("Loan Repayment Schedule:");
+        System.out.println("Installment No.\tOpening Balance\tInterest\tPrincipal\tClosing Balance");
+        double outstandingPrincipal = loanAmount;
+        for (int i = 1; i <= loanTerm; i++) {
+            double interest = outstandingPrincipal * interestRate / 100 / 12;
+            double principal = outstandingPrincipal * (interestRate / 100 / 12) * (Math.pow((1 + interestRate / 100 / 12), loanTerm) / (Math.pow((1 + interestRate / 100 / 12), loanTerm) - 1));
+            double installment = principal + interest;
+            outstandingPrincipal -= principal;
+            System.out.println(i + "\t\t" + decimalFormat.format(outstandingPrincipal + principal) + "\t\t" + decimalFormat.format(interest) + "\t\t" + decimalFormat.format(principal) + "\t\t" + decimalFormat.format(outstandingPrincipal));
+        }
+    }
+}
+
