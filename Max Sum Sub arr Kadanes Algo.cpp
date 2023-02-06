@@ -99,3 +99,77 @@ public class LoanRepayment {
     }
 }
 
+
+
+
+
+
+
+public class Customer {
+    private static int nextCustomerId = 1;
+    private int customerId;
+    private String name;
+    private int age;
+    private String address;
+
+    public Customer(String name, int age, String address) {
+        this.customerId = nextCustomerId++;
+        this.name = name;
+        this.age = age;
+        this.address = address;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+}
+
+public class Loan {
+    private static int nextLoanAgreementId = 1;
+    private int loanAgreementId;
+    private Customer customer;
+    private double loanAmount;
+    private int loanPeriod;
+    private double interestRate;
+
+    public Loan(Customer customer, double loanAmount, int loanPeriod, double interestRate) {
+        this.loanAgreementId = nextLoanAgreementId++;
+        this.customer = customer;
+        this.loanAmount = loanAmount;
+        this.loanPeriod = loanPeriod;
+        this.interestRate = interestRate;
+    }
+
+    public int getLoanAgreementId() {
+        return loanAgreementId;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public double getLoanAmount() {
+        return loanAmount;
+    }
+
+    public int getLoanPeriod() {
+        return loanPeriod;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+}
+
