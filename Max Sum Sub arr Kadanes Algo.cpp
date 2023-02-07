@@ -34,31 +34,6 @@ int main()
     while(t--) //while testcases exist
     {
 
-public class ReverseString {
-    public static void main(String[] args) {
-        String originalString = "Hello World";
-
-        // Using StringBuffer class
-        String reversedString = new StringBuffer(originalString).reverse().toString();
-        System.out.println("Reversed String (StringBuffer): " + reversedString);
-
-        // Using StringBuilder class
-        reversedString = new StringBuilder(originalString).reverse().toString();
-        System.out.println("Reversed String (StringBuilder): " + reversedString);
-
-        // Using Recursion
-        reversedString = reverseStringRecursion(originalString);
-        System.out.println("Reversed String (Recursion): " + reversedString);
-    }
-
-    public static String reverseStringRecursion(String originalString) {
-        if (originalString.isEmpty()) {
-            return originalString;
-        }
-        return reverseStringRecursion(originalString.substring(1)) + originalString.charAt(0);
-    }
-}
-
 
         
         cin>>n; //input size of array
@@ -77,99 +52,113 @@ public class ReverseString {
 
 
 
-import java.text.DecimalFormat;
 
-public class LoanRepayment {
-    public static void main(String[] args) {
-        double loanAmount = 10000;
-        double interestRate = 10;
-        int loanTerm = 12;
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-        System.out.println("Loan Repayment Schedule:");
-        System.out.println("Installment No.\tOpening Balance\tInterest\tPrincipal\tClosing Balance");
-        double outstandingPrincipal = loanAmount;
-        for (int i = 1; i <= loanTerm; i++) {
-            double interest = outstandingPrincipal * interestRate / 100 / 12;
-            double principal = outstandingPrincipal * (interestRate / 100 / 12) * (Math.pow((1 + interestRate / 100 / 12), loanTerm) / (Math.pow((1 + interestRate / 100 / 12), loanTerm) - 1));
-            double installment = principal + interest;
-            outstandingPrincipal -= principal;
-            System.out.println(i + "\t\t" + decimalFormat.format(outstandingPrincipal + principal) + "\t\t" + decimalFormat.format(interest) + "\t\t" + decimalFormat.format(principal) + "\t\t" + decimalFormat.format(outstandingPrincipal));
-        }
+public class Bank {
+  private ArrayList<Customer> customers;
+  
+  public Bank() {
+    this.customers = new ArrayList<>();
+  }
+  
+  public boolean registerCustomer(Customer customer) {
+    for (Customer c : customers) {
+      if (c.getCustomerld() == customer.getCustomerld()) {
+        return false;
+      }
     }
+    customers.add(customer);
+    return true;
+  }
+  
+  public Customer findCustomer(int customerld) {
+    for (Customer c : customers) {
+      if (c.getCustomerld() == customerld) {
+        return c;
+      }
+    }
+    return null;
+  }
+  
+  public void printAllCustomers() {
+    for (Customer c : customers) {
+      System.out.println(c.toString());
+    }
+  }
+  
+  public boolean deleteCustomer(int customerld) {
+    for (Customer c : customers) {
+      if (c.getCustomerld() == customerld) {
+        customers.remove(c);
+        return true;
+      }
+    }
+    return false;
+  }
 }
-
-
-
-
-
-
 
 public class Customer {
-    private static int nextCustomerId = 1;
-    private int customerId;
-    private String name;
-    private int age;
-    private String address;
+  private int customerld;
+  private String customerName;
+  private String contactNumber;
+  private String emailAddress;
+  private double monthlyIncome;
+  private String profession;
+  private double totalMonthlyExpenses;
+  private double maxEligibleLoanAmount;
+  private String designation;
+  private String companyName;
+  private LocalDate dateOfBirth;
+  
+  public Customer(int customerld, String customerName, String contactNumber, String emailAddress, 
+                  double monthlyIncome, String profession, double totalMonthlyExpenses,
+                  String designation, String companyName, LocalDate dateOfBirth) {
+    this.customerld = customerld;
+    this.customerName = customerName;
+    this.contactNumber = contactNumber;
+    this.emailAddress = emailAddress;
+    this.monthlyIncome = monthlyIncome;
+    this.profession = profession;
+    this.totalMonthlyExpenses = totalMonthlyExpenses;
+    this.designation = designation;
+    this.companyName = companyName;
+    this.dateOfBirth = dateOfBirth;
+  }
+  
+  public int getCustomerld() {
+    return customerld;
+  }
+  
+  public String getCustomerName() {
+    return customerName;
+  }
+  
+  public String getContactNumber() {
+    return contactNumber;
+  }
+  
+  public String getEmailAddress() {
+    return emailAddress;
+  }
+  
+  public double getMonthlyIncome() {
+    return monthlyIncome;
+  }
+  
+  public String getProfession() {
+    return profession;
+  }
+  
+  public double getTotalMonthlyExpenses() {
+    return totalMonthlyExpenses;
+  }
+  
+  public double getMaxEligibleLoanAmount() {
+    return maxEligibleLoanAmount;
+  }
+  
+  public String getDesignation() {
 
-    public Customer(String name, int age, String address) {
-        this.customerId = nextCustomerId++;
-        this.name = name;
-        this.age = age;
-        this.address = address;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-}
-
-public class Loan {
-    private static int nextLoanAgreementId = 1;
-    private int loanAgreementId;
-    private Customer customer;
-    private double loanAmount;
-    private int loanPeriod;
-    private double interestRate;
-
-    public Loan(Customer customer, double loanAmount, int loanPeriod, double interestRate) {
-        this.loanAgreementId = nextLoanAgreementId++;
-        this.customer = customer;
-        this.loanAmount = loanAmount;
-        this.loanPeriod = loanPeriod;
-        this.interestRate = interestRate;
-    }
-
-    public int getLoanAgreementId() {
-        return loanAgreementId;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public double getLoanAmount() {
-        return loanAmount;
-    }
-
-    public int getLoanPeriod() {
-        return loanPeriod;
-    }
-
-    public double getInterestRate() {
-        return interestRate;
-    }
-}
 
