@@ -146,3 +146,142 @@ public class Customer {
   }
 
   public LocalDate getDateOf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.time.LocalDate;
+
+public class Bank {
+    private Customer[] customers;
+    private int numberOfCustomers;
+
+    public Bank() {
+        customers = new Customer[10];
+        numberOfCustomers = 0;
+    }
+
+    public boolean registerCustomer(Customer customer) {
+        if (numberOfCustomers == customers.length) {
+            return false;
+        }
+        customers[numberOfCustomers] = customer;
+        numberOfCustomers++;
+        return true;
+    }
+
+    public Customer findCustomer(int customerId) {
+        for (int i = 0; i < numberOfCustomers; i++) {
+            if (customers[i].getCustomerId() == customerId) {
+                return customers[i];
+            }
+        }
+        return null;
+    }
+
+    public void printAllCustomers() {
+        for (int i = 0; i < numberOfCustomers; i++) {
+            System.out.println(customers[i]);
+        }
+    }
+
+    public boolean deleteCustomer(int customerId) {
+        for (int i = 0; i < numberOfCustomers; i++) {
+            if (customers[i].getCustomerId() == customerId) {
+                customers[i] = customers[numberOfCustomers - 1];
+                customers[numberOfCustomers - 1] = null;
+                numberOfCustomers--;
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+public class Customer {
+    private int customerId;
+    private String customerName;
+    private String contactNumber;
+    private String emailAddress;
+    private LocalDate dateOfBirth;
+    private double monthlyIncome;
+    private String profession;
+    private double totalMonthlyExpenses;
+    private String designation;
+    private String companyName;
+
+    public Customer(int customerId, String customerName, String contactNumber, String emailAddress,
+                    LocalDate dateOfBirth, double monthlyIncome, String profession, double totalMonthlyExpenses,
+                    String designation, String companyName) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.contactNumber = contactNumber;
+        this.emailAddress = emailAddress;
+        this.dateOfBirth = dateOfBirth;
+        this.monthlyIncome = monthlyIncome;
+        this.profession = profession;
+        this.totalMonthlyExpenses = totalMonthlyExpenses;
+        this.designation = designation;
+        this.companyName = companyName;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public double calculateDBR() {
+        return totalMonthlyExpenses / monthlyIncome;
+    }
+
+    public double calculateMaxEligibleEMI() {
+        return monthlyIncome * 0.5;
+    }
+
+    public void calculateEligibleLoanAmount() {
+        // TODO: Implementation
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", customerName='" + customer
+
+
+
+
+
+
+
+import java.time.LocalDate;
+
+public class Main {
+    public static void main(String[] args) {
+        Bank bank = new Bank();
+        Customer customer1 = new Customer(1, "John Doe", "123-456-7890", "john.doe@email.com", LocalDate.of(1995, 12, 12),
+                5000, "Software Engineer", 1000, "Manager", "Microsoft");
+        Customer customer2 = new Customer(2, "Jane Doe", "098-765-4321", "jane.doe@email.com", LocalDate.of(1996, 11, 11),
+                6000, "Doctor", 1500, "Consultant", "Hospital");
+        bank.registerCustomer(customer1);
+        bank.registerCustomer(customer2);
+
+        bank.printAllCustomers();
+    }
+}
