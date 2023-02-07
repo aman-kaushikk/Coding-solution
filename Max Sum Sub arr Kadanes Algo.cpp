@@ -53,45 +53,48 @@ int main()
 
 
 
+
+
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Bank {
-  private ArrayList<Customer> customers;
-  
+  private Customer[] customers;
+
   public Bank() {
-    this.customers = new ArrayList<>();
+    this.customers = new Customer[10];
   }
-  
+
   public boolean registerCustomer(Customer customer) {
-    for (Customer c : customers) {
-      if (c.getCustomerld() == customer.getCustomerld()) {
-        return false;
+    for (int i = 0; i < this.customers.length; i++) {
+      if (this.customers[i] == null) {
+        this.customers[i] = customer;
+        return true;
       }
     }
-    customers.add(customer);
-    return true;
+    return false;
   }
-  
-  public Customer findCustomer(int customerld) {
-    for (Customer c : customers) {
-      if (c.getCustomerld() == customerld) {
-        return c;
+
+  public Customer findCustomer(int customerId) {
+    for (int i = 0; i < this.customers.length; i++) {
+      if (this.customers[i] != null && this.customers[i].getCustomerId() == customerId) {
+        return this.customers[i];
       }
     }
     return null;
   }
-  
+
   public void printAllCustomers() {
-    for (Customer c : customers) {
-      System.out.println(c.toString());
+    for (int i = 0; i < this.customers.length; i++) {
+      if (this.customers[i] != null) {
+        System.out.println(this.customers[i].toString());
+      }
     }
   }
-  
-  public boolean deleteCustomer(int customerld) {
-    for (Customer c : customers) {
-      if (c.getCustomerld() == customerld) {
-        customers.remove(c);
+
+  public boolean deleteCustomer(int customerId) {
+    for (int i = 0; i < this.customers.length; i++) {
+      if (this.customers[i] != null && this.customers[i].getCustomerId() == customerId) {
+        this.customers[i] = null;
         return true;
       }
     }
@@ -100,8 +103,9 @@ public class Bank {
 }
 
 public class Customer {
-  private int customerld;
+  private int customerId;
   private String customerName;
+  private LocalDate dateOfBirth;
   private String contactNumber;
   private String emailAddress;
   private double monthlyIncome;
@@ -109,56 +113,36 @@ public class Customer {
   private double totalMonthlyExpenses;
   private double maxEligibleLoanAmount;
   private String designation;
-  private String companyName;
-  private LocalDate dateOfBirth;
-  
-  public Customer(int customerld, String customerName, String contactNumber, String emailAddress, 
-                  double monthlyIncome, String profession, double totalMonthlyExpenses,
-                  String designation, String companyName, LocalDate dateOfBirth) {
-    this.customerld = customerld;
+
+  public Customer(int customerId, String customerName, LocalDate dateOfBirth, String contactNumber,
+                  String emailAddress, double monthlyIncome, String profession, double totalMonthlyExpenses,
+                  double maxEligibleLoanAmount, String designation) {
+    this.customerId = customerId;
     this.customerName = customerName;
+    this.dateOfBirth = dateOfBirth;
     this.contactNumber = contactNumber;
     this.emailAddress = emailAddress;
     this.monthlyIncome = monthlyIncome;
     this.profession = profession;
     this.totalMonthlyExpenses = totalMonthlyExpenses;
+    this.maxEligibleLoanAmount = maxEligibleLoanAmount;
     this.designation = designation;
-    this.companyName = companyName;
-    this.dateOfBirth = dateOfBirth;
   }
-  
-  public int getCustomerld() {
-    return customerld;
+
+  public int getCustomerId() {
+    return customerId;
   }
-  
+
+  public void setCustomerId(int customerId) {
+    this.customerId = customerId;
+  }
+
   public String getCustomerName() {
     return customerName;
   }
-  
-  public String getContactNumber() {
-    return contactNumber;
-  }
-  
-  public String getEmailAddress() {
-    return emailAddress;
-  }
-  
-  public double getMonthlyIncome() {
-    return monthlyIncome;
-  }
-  
-  public String getProfession() {
-    return profession;
-  }
-  
-  public double getTotalMonthlyExpenses() {
-    return totalMonthlyExpenses;
-  }
-  
-  public double getMaxEligibleLoanAmount() {
-    return maxEligibleLoanAmount;
-  }
-  
-  public String getDesignation() {
 
+  public void setCustomerName(String customerName) {
+    this.customerName = customerName;
+  }
 
+  public LocalDate getDateOf
