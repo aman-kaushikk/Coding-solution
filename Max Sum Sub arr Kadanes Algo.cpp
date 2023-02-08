@@ -54,47 +54,47 @@ int main()
 
 
 
+
+
+
 public class Main {
-    public static void main(String[] args) {
-        try {
-            throw new Exception("My Exception");
-        } catch (Exception e) {
-            System.out.println("Exception caught: " + e.getMessage());
-        }
+  public static void main(String[] args) {
+    try {
+      throw new RuntimeException("Unchecked Exception");
+    } catch (RuntimeException e) {
+      System.out.println("Caught Exception: " + e.getMessage());
     }
+  }
+}
+
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      throwException();
+    } catch (RuntimeException e) {
+      System.out.println("Caught Exception: " + e.getMessage());
+    }
+  }
+
+  public static void throwException() throws RuntimeException {
+    throw new RuntimeException("Unchecked Exception");
+  }
 }
 
 
 
-class Main {
-    static void throwException() throws Exception {
-        throw new Exception("My Exception");
-    }
 
-    public static void main(String[] args) {
-        try {
-            throwException();
-        } catch (Exception e) {
-            System.out.println("Exception caught: " + e.getMessage());
-        }
-    }
+public class Main {
+  public static void main(String[] args) {
+    throwException();
+  }
+
+  public static void throwException() {
+    throw new RuntimeException("Unchecked Exception");
+  }
 }
 
 
 
-
-
-class Main {
-    static void throwException() {
-        try {
-            throw new Exception("My Exception");
-        } catch (Exception e) {
-            System.out.println("Exception caught: " + e.getMessage());
-        }
-    }
-
-    public static void main(String[] args) {
-        throwException();
-    }
-}
 
