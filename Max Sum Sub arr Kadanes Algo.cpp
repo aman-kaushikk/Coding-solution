@@ -181,3 +181,12 @@ public class Bank {
 }
 
 
+
+
+public static void main(String[] args) {
+    Sorter sorter = new SortListAdapter();
+    int[] numbers = {4, 2, 7, 1, 3, 6, 5};
+    numbers = sorter.sort(numbers);
+    System.out.println(Arrays.toString(numbers));
+}
+
