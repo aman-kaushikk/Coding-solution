@@ -146,3 +146,87 @@ Interface Segregation Principle (ISP): The ISP states that clients should not be
 Dependency Inversion Principle (DIP): The DIP states that high-level modules should not depend on low-level modules; both should depend on abstractions. In the Java API, many classes and interfaces depend on abstractions rather than concrete implementations. For example, the java.util.Collections class provides a set of methods that operate on any collection that implements the java.util.Collection interface.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+public interface LoanProductInterface {
+    public String getName();
+    public double getInterestRate();
+    public int getMinCreditScore();
+    public double getMaxLoanAmount();
+}
+
+public class LoanProduct implements LoanProductInterface {
+    private String name;
+    private double interestRate;
+    private int minCreditScore;
+    private double maxLoanAmount;
+    
+    public LoanProduct() {
+    }
+    
+    public LoanProduct(String name, double interestRate, int minCreditScore, double maxLoanAmount) {
+        this.name = name;
+        this.interestRate = interestRate;
+        this.minCreditScore = minCreditScore;
+        this.maxLoanAmount = maxLoanAmount;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public double getInterestRate() {
+        return interestRate;
+    }
+    
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
+    }
+    
+    public int getMinCreditScore() {
+        return minCreditScore;
+    }
+    
+    public void setMinCreditScore(int minCreditScore) {
+        this.minCreditScore = minCreditScore;
+    }
+    
+    public double getMaxLoanAmount() {
+        return maxLoanAmount;
+    }
+    
+    public void setMaxLoanAmount(double maxLoanAmount) {
+        this.maxLoanAmount = maxLoanAmount;
+    }
+}
+
+public class Bank {
+    private LoanProductInterface[] loanProducts = new LoanProductInterface[10];
+    private int nextIndex = 0;
+    
+    public void addLoanProduct(String name, double interestRate, int minCreditScore, double maxLoanAmount) {
+        if (nextIndex < loanProducts.length) {
+            loanProducts[nextIndex] = new LoanProduct(name, interestRate, minCreditScore, maxLoanAmount);
+            nextIndex++;
+        }
+    }
+    
+    // other methods...
+}
+
+
