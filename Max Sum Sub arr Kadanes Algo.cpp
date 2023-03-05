@@ -56,64 +56,85 @@ int main()
 
 
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Product Table</title>
-	<style>
-		table {
-			border-collapse: collapse;
-			width: 100%;
-		}
-		th, td {
-			text-align: left;
-			padding: 8px;
-			border: 1px solid black;
-		}
-		th {
-			background-color: #333;
-			color: white;
-		}
-		button {
-			padding: 5px;
-			margin-right: 5px;
-		}
-	</style>
-</head>
-<body>
-	<form>
-		<table>
-			<tr>
-				<th>Product Code</th>
-				<th>Search:</th>
-				<td><input type="text" id="search" name="search"></td>
-				<th>Reviewed By</th>
-				<td><input type="text" id="reviewed_by" name="reviewed_by"></td>
-				<th>Product Name</th>
-				<td><input type="text" id="product_name" name="product_name"></td>
-				<th>Product Description</th>
-				<td><input type="text" id="product_description" name="product_description"></td>
-				<th>Product Type</th>
-				<td><input type="text" id="product_type" name="product_type"></td>
-				<th>Created By</th>
-				<td><input type="text" id="created_by" name="created_by"></td>
-				<th>Status</th>
-				<td><input type="text" id="status" name="status"></td>
-				<th>Actions:</th>
-				<td>
-					<button>Edit</button>
-					<button>Delete</button>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="16" style="text-align: right;">
-					Showing 1 to 1 of 1 entries
-					<button>Previous</button>
-					<button>1</button>
-					<button>Next</button>
-				</td>
-			</tr>
-		</table>
-	</form>
-</body>
-</html>
+<nav>
+  <ul>
+    <li><a href="#">Product</a></li>
+    <li class="dropdown">
+      <a href="#">Policy Setup</a>
+      <ul>
+        <li><a href="#">Policy 1</a></li>
+        <li><a href="#">Policy 2</a></li>
+        <li><a href="#">Policy 3</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#">Parameters</a>
+      <ul>
+        <li><a href="#">Parameter 1</a></li>
+        <li><a href="#">Parameter 2</a></li>
+        <li><a href="#">Parameter 3</a></li>
+      </ul>
+    </li>
+    <li><a href="#">Application</a></li>
+    <li><a href="#">Receipt</a></li>
+    <li><a href="#">Accounting</a></li>
+    <li><a href="#">Customer Service</a></li>
+    <li><a href="#">Report</a></li>
+  </ul>
+</nav>
+
+
+nav {
+  background-color: lightgray;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin: 0;
+}
+
+nav a {
+  display: block;
+  padding: 10px 20px;
+  color: black;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: darkgray;
+}
+
+nav .dropdown:hover > ul {
+  display: flex;
+  flex-direction: column;
+}
+
+nav .dropdown ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+nav .dropdown li {
+  width: 100%;
+}
+
+nav .dropdown a {
+  padding: 10px 20px;
+}
+
+nav .dropdown a:hover {
+  background-color: lightgray;
+}
+
