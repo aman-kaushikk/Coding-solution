@@ -214,3 +214,141 @@ $(document).ready(function(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery Bootstrap Form</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <div class="container">
+  
+    <h1>jQuery Bootstrap Form</h1>
+    
+    <form>
+      <div class="form-group">
+        <label for="inputField">Input Field</label>
+        <input type="text" class="form-control" id="inputField">
+        <label for="displayLabel">Label Field</label>
+        <label class="form-control" id="displayLabel"></label>
+      </div>
+      <div class="form-group">
+        <label for="dropDown">Dropdown</label>
+        <select class="form-control" id="dropDown">
+          <option value="">--Select an option--</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="dateField">Date Field</label>
+        <input type="text" class="form-control" id="dateField">
+        <div class="datepicker"></div>
+      </div>
+      <div class="form-group">
+        <label for="checkbox">Checkbox</label>
+        <input type="checkbox" id="checkbox">
+        <label for="yesRadio">Yes</label>
+        <input type="radio" id="yesRadio" name="radio">
+        <label for="noRadio">No</label>
+        <input type="radio" id="noRadio" name="radio" checked>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  
+  </div>
+
+  <script>
+    // Your jQuery code goes here
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+  // Add options to the dropdown
+  $("#dropDown").append('<option value="option1">Option 1</option>');
+  $("#dropDown").append('<option value="option2">Option 2</option>');
+  $("#dropDown").append('<option value="option3">Option 3</option>');
+
+  // Show tooltip on dropdown selection
+  $("#dropDown").change(function() {
+    $(this).attr("title", $(this).val());
+    $(this).tooltip("show");
+  });
+
+  // Initialize datepicker and hide datepicker area
+  $("#dateField").datepicker({
+    showOn: "button",
+    buttonImage: "https://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+    buttonImageOnly: true,
+    buttonText: "Select date",
+    beforeShow: function(input, inst) {
+      $(".datepicker").hide();
+    },
+    onSelect: function(dateText, inst) {
+      $(this).val(dateText);
+    }
+  });
+  $(".datepicker").hide();
+
+  // Handle checkbox and radio buttons
+  $("#checkbox").change(function() {
+    if ($(this).prop("checked")) {
+      $("#yesRadio").prop("checked", true);
+    } else {
+      $("#noRadio").prop("checked", true);
+    }
+  });
+  $("input[name='radio']").change(function() {
+    if ($("#yesRadio").prop("checked")) {
+      $("#checkbox").prop("checked", true);
+    } else {
+      $("#checkbox").prop("checked", false);
+    }
+  });
+
+  // Handle input field and label display
+  $("#inputField").on("input", function() {
+    $("#displayLabel").text($(this).val());
+  });
+});
+
+
+
+
+
+
+.datepicker {
+  position: relative;
+}
+.datepicker img {
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+
+
+
+
