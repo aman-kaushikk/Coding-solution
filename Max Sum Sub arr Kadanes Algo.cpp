@@ -55,86 +55,44 @@ int main()
 
 
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Name Validation</title>
+  </head>
+  <body>
+    <form>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName" oninput="validateName()" required>
 
-<nav>
-  <ul>
-    <li><a href="#">Product</a></li>
-    <li class="dropdown">
-      <a href="#">Policy Setup</a>
-      <ul>
-        <li><a href="#">Policy 1</a></li>
-        <li><a href="#">Policy 2</a></li>
-        <li><a href="#">Policy 3</a></li>
-      </ul>
-    </li>
-    <li class="dropdown">
-      <a href="#">Parameters</a>
-      <ul>
-        <li><a href="#">Parameter 1</a></li>
-        <li><a href="#">Parameter 2</a></li>
-        <li><a href="#">Parameter 3</a></li>
-      </ul>
-    </li>
-    <li><a href="#">Application</a></li>
-    <li><a href="#">Receipt</a></li>
-    <li><a href="#">Accounting</a></li>
-    <li><a href="#">Customer Service</a></li>
-    <li><a href="#">Report</a></li>
-  </ul>
-</nav>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" oninput="validateName()" required>
+
+      <p id="validationResult"></p>
+    </form>
+
+    <script>
+      function validateName() {
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const regex = /^[a-zA-Z]{3,}$/; // Matches 3 or more alphabets only
+
+        if (regex.test(firstName) && regex.test(lastName)) {
+          document.getElementById("validationResult").textContent = "Valid names";
+        } else {
+          document.getElementById("validationResult").textContent = "Invalid names";
+        }
+      }
+    </script>
+  </body>
+</html>
 
 
-nav {
-  background-color: lightgray;
-}
 
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: flex-start;
-  margin: 0;
-  padding: 0;
-}
 
-nav li {
-  margin: 0;
-}
 
-nav a {
-  display: block;
-  padding: 10px 20px;
-  color: black;
-  text-decoration: none;
-}
 
-nav a:hover {
-  background-color: darkgray;
-}
 
-nav .dropdown:hover > ul {
-  display: flex;
-  flex-direction: column;
-}
 
-nav .dropdown ul {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: white;
-  margin: 0;
-  padding: 0;
-}
 
-nav .dropdown li {
-  width: 100%;
-}
-
-nav .dropdown a {
-  padding: 10px 20px;
-}
-
-nav .dropdown a:hover {
-  background-color: lightgray;
-}
 
