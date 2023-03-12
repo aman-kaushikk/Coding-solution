@@ -167,3 +167,91 @@ public class LoginServlet extends HttpServlet {
 
 
 
+
+
+
+
+
+
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class CookieDisplayServlet extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Set the response content type
+        response.setContentType("text/html");
+        
+        PrintWriter out = response.getWriter();
+        Cookie[] cookies = request.getCookies();
+        
+        // Display cookies in a table
+        if (cookies != null && cookies.length > 0) {
+            out.println("<html><body>");
+            out.println("<h2> Cookies </h2>");
+            out.println("<table border='1'>");
+            out.println("<tr><th>Name</th><th>Value</th></tr>");
+            for (Cookie cookie : cookies) {
+                out.println("<tr><td>" + cookie.getName() + "</td><td>" + cookie.getValue() + "</td></tr>");
+            }
+            out.println("</table></body></html>");
+        } else { // Display "No Cookie" message if there are no cookies
+            out.println("<html><body>");
+            out.println("<h2> No Cookie </h2>");
+            out.println("</body></html>");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class CookieDisplayServlet extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Set the response content type
+        response.setContentType("text/html");
+        
+        PrintWriter out = response.getWriter();
+        Cookie[] cookies = request.getCookies();
+        
+        // Display cookies in a table if cookies are enabled
+        if (cookies != null && cookies.length > 0) {
+            out.println("<html><body>");
+            out.println("<h2> Cookies </h2>");
+            out.println("<table border='1'>");
+            out.println("<tr><th>Name</th><th>Value</th></tr>");
+            for (Cookie cookie : cookies) {
+                out.println("<tr><td>" + cookie.getName() + "</td><td>" + cookie.getValue() + "</td></tr>");
+            }
+            out.println("</table></body></html>");
+        } else { // Display "No Cookie" message and recreate the cookies as URL parameters
+            out.println("<html><body>");
+            out.println("<h2> No Cookie </h2>");
+            out.println("</body></html>");
+            
+            // Recreate the cookies as URL parameters
+            String name1 = "cookie1";
+            String value1 = "value1";
+            String name2 = "cookie2";
+            String value2 = "value2";
+            
+            String urlWithParams = response.encodeURL(request.getContextPath() + "/display?name1=" + value1 + "&name2=" + value2);
+            out.println("<p>Please click <a href=\"" + urlWithParams + "\">here</a> to view the cookies</p>");
+        }
+    }
+}
+
