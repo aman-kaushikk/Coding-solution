@@ -255,3 +255,46 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 
     out.close();
 }
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MCQ Test</title>
+</head>
+<body>
+    <h1>MCQ Test</h1>
+    
+    <c:if test="${testStarted}">
+        <c:if test="${!testEnded}">
+            <form action="test" method="post">
+                <h2>Question ${questionNumber}:</h2>
+                <p>${questionText}</p>
+                
+                <c:forEach items="${options}" var="option">
+                    <input type="radio" name="answer" value="${option}" id="${option}"/>
+                    <label for="${option}">${option}</label><br/>
+                </c:forEach>
+                
+                <input type="submit" name="submit" value="Submit"/>
+            </form>
+        </c:if>
+
+        <c:if test="${testEnded}">
+            <h2>Test Ended</h2>
+            <p>You have answered ${correctAnswers} out of ${totalQuestions} questions correctly.</p>
+        </c:if>
+    </c:if>
+
+    <c:if test="${!testStarted}">
+        <form action="test" method="post">
+            <input type="submit" name="start" value="Start Test"/>
+        </form>
+    </c:if>
+    
+</body>
+</html>
