@@ -57,25 +57,63 @@ int main()
 
 
 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Choose a page</title>
+</head>
+<body>
+	<h1>Choose a page</h1>
+	<form action="PageController" method="get">
+		<label for="page">Enter a number:</label>
+		<input type="number" id="page" name="page" required>
+		<br><br>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
 
-<%!
-    public int sum(int a, int b) {
-        return a + b;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class PageController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public PageController() {
+        super();
     }
-%>
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String page = request.getParameter("page");
+		
+		if (page.equals("1")) {
+			request.getRequestDispatcher("AboutUs.jsp").forward(request, response);
+		} else if (page.equals("2")) {
+			request.getRequestDispatcher("ContactUs.jsp").forward(request, response);
+		} else {
+			request.getRequestDispatcher("error.jsp").forward(request, response);
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+}
+
+
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Sum of Two Numbers</title>
+	<title>About Us</title>
 </head>
 <body>
-    <%
-        int num1 = 3;
-        int num2 = 4;
-        int result = sum(num1, num2);
-    %>
-    <p>Sum of <%= num1 %> and <%= num2 %> is <%= result %>.</p>
-    <% System.out.println("Sum of " + num1 + " and " + num2 + " is " + result + "."); %>
+	<h1>About Us</h1>
+	<p>We are a company that specializes in making things.</p>
 </body>
 </html>
 
@@ -84,12 +122,14 @@ int main()
 
 
 
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Current Date and Time</title>
+	<title>Contact Us</title>
 </head>
 <body>
-    <p>The current date and time is: <%= new java.util.Date() %></p>
+	<h1>Contact Us</h1>
+	<p>You can contact us at 555-1234 or email us at contact@company.com.</p>
 </body>
 </html>
 
@@ -97,79 +137,16 @@ int main()
 
 
 
-
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Factorials</title>
+	<title>Error</title>
 </head>
 <body>
-    <h1>Factorials</h1>
-    
-    <%-- Get the value of n from the request parameters --%>
-    <% int n = Integer.parseInt(request.getParameter("n")); %>
-    
-    <%-- Calculate the factorials of the numbers from 1 to n --%>
-    <% long[] factorials = new long[n]; %>
-    <% long factorial = 1; %>
-    <% for (int i = 0; i < n; i++) { %>
-        <% factorial *= (i + 1); %>
-        <% factorials[i] = factorial; %>
-    <% } %>
-    
-    <%-- Print the table of numbers and their factorials --%>
-    <table border="1">
-        <tr>
-            <th>Number</th>
-            <th>Factorial</th>
-        </tr>
-        <% for (int i = 0; i < n; i++) { %>
-            <tr>
-                <td><%= i + 1 %></td>
-                <td><%= factorials[i] %></td>
-            </tr>
-        <% } %>
-    </table>
+	<h1>Error</h1>
+	<p>The page you requested does not exist.</p>
 </body>
 </html>
-
-
-
-
-
-
-<html>
-<head>
-    <title>Movie Ticket Price</title>
-</head>
-<body>
-    <h1>Movie Ticket Price</h1>
-    
-    <%-- Get the user's name and age from the request parameters --%>
-    <% String name = request.getParameter("name"); %>
-    <% int age = Integer.parseInt(request.getParameter("age")); %>
-    
-    <%-- Determine the ticket price based on the age --%>
-    <% double price; %>
-    <% if (age > 62) { %>
-        <% price = 7.00; %>
-    <% } else if (age < 10) { %>
-        <% price = 5.00; %>
-    <% } else { %>
-        <% price = 9.50; %>
-    <% } %>
-    
-    <%-- Print the name, age, and ticket price --%>
-    <p>Hello <%= name %>, your age is <%= age %>.</p>
-    <p>The ticket price is $<%= price %>.</p>
-</body>
-</html>
-
-
-
-
-
-
-
 
 
 
