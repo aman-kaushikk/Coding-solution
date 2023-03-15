@@ -97,4 +97,21 @@ int main()
 
 
 
+<html>
+<head>
+	<title>Add Product</title>
+</head>
+<body>
+	<h1>Add Product</h1>
+	<form method="post" action="product.jsp">
+		<label for="product-id">Product ID:</label>
+		<input type="text" name="product-id" id="product-id" required><br>
+		<label for="product-name">Product Name:</label>
+		<input type="text" name="product-name" id="product-name" required><br>
+		<label for="product-price">Product Price:</label>
+		<input type="number" name="product-price" id="product-price" required><br>
+		<input type="submit" value="Add Product">
+	</form>
+</body>
+</html>
 
