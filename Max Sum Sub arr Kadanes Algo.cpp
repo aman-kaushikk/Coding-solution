@@ -53,65 +53,33 @@ int main()
 
 
 
+<label for="range-slider">Range Slider:</label>
+<input type="range" id="range-slider" min="0" max="100" value="50">
+<input type="text" id="range-value" value="50">
 
 
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Iterator" %>
-<%
-	ArrayList products = (ArrayList) session.getAttribute("products");
-	if (products == null) {
-		products = new ArrayList();
-		session.setAttribute("products", products);
-	}
+#range-slider {
+  width: 100%;
+  height: 20px;
+  margin-bottom: 20px;
+}
 
-	String productId = request.getParameter("product-id");
-	String productName = request.getParameter("product-name");
-	int productPrice = Integer.parseInt(request.getParameter("product-price"));
-
-	boolean productExists = false;
-	for (Iterator i = products.iterator(); i.hasNext(); ) {
-		String[] product = (String[]) i.next();
-		if (product[0].equals(productId)) {
-			productExists = true;
-			break;
-		}
-	}
-
-	if (productExists) {
-		out.println("Product with ID " + productId + " already exists. Please insert another product.");
-	} else {
-		String[] product = {productId, productName, Integer.toString(productPrice)};
-		products.add(product);
-		out.println("Product added: " + productName + " (ID: " + productId + ", Price: " + productPrice + ")");
-	}
-
-	out.println("<h2>All Products:</h2>");
-	out.println("<table>");
-	out.println("<tr><th>ID</th><th>Name</th><th>Price</th></tr>");
-	for (Iterator i = products.iterator(); i.hasNext(); ) {
-		String[] product = (String[]) i.next();
-		out.println("<tr><td>" + product[0] + "</td><td>" + product[1] + "</td><td>" + product[2] + "</td></tr>");
-	}
-	out.println("</table>");
-%>
+#range-value {
+  width: 50px;
+  margin-left: 10px;
+}
 
 
 
-<html>
-<head>
-	<title>Add Product</title>
-</head>
-<body>
-	<h1>Add Product</h1>
-	<form method="post" action="product.jsp">
-		<label for="product-id">Product ID:</label>
-		<input type="text" name="product-id" id="product-id" required><br>
-		<label for="product-name">Product Name:</label>
-		<input type="text" name="product-name" id="product-name" required><br>
-		<label for="product-price">Product Price:</label>
-		<input type="number" name="product-price" id="product-price" required><br>
-		<input type="submit" value="Add Product">
-	</form>
-</body>
-</html>
+var rangeSlider = document.getElementById("range-slider");
+var rangeValue = document.getElementById("range-value");
+
+rangeSlider.oninput = function() {
+  rangeValue.value = this.value;
+}
+
+rangeValue.oninput = function() {
+  rangeSlider.value = this.value;
+}
+
 
