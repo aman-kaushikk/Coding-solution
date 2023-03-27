@@ -83,3 +83,32 @@ rangeValue.oninput = function() {
 }
 
 
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+$(document).ready(function() {
+  $('#emi-form').submit(function(event) {
+    event.preventDefault();
+    
+    var formData = {
+      principle: $('#principle').val(),
+      rate: $('#rate').val(),
+      tenure: $('#tenure').val()
+    };
+    
+    $.ajax({
+      type: 'POST',
+      url: '/calculate-emi',
+      data: JSON.stringify(formData),
+      contentType: 'application/json',
+      success: function(result) {
+        $('#emi-result').text('EMI: ' + result.emi);
+      }
+    });
+  });
+});
+
