@@ -1,4 +1,4 @@
-8
+88
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -140,3 +140,25 @@ public class FilePrinter {
     }
 }
 
+
+
+
+
+
+@Configuration
+@EnableWebMvc
+public class AppConfig implements WebMvcConfigurer {
+ 
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+ 
+    @Bean
+    public MultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setMaxUploadSize(10000000);
+        return resolver;
+    }
+ 
+}
