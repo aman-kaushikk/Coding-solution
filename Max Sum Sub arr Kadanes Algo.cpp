@@ -54,111 +54,112 @@ int main()
 
 
 
-<form method="POST" action="upload.jsp" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <input type="submit" value="Upload">
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Table with Pagination</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+		.pagination {
+			display: inline-block;
+			padding: 8px 16px;
+			margin: 8px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+		}
+		.active {
+			background-color: #4CAF50;
+			color: white;
+			border-radius: 5px;
+		}
+		.disabled {
+			background-color: #ddd;
+			color: #999;
+			border-radius: 5px;
+		}
+	</style>
+</head>
+<body>
+	<table id="myTable">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>John Doe</td>
+				<td>25</td>
+				<td>john.doe@example.com</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>Jane Smith</td>
+				 <td>30</td>
+				<td>jane.smith@example.com</td>
+			</tr>
+			<!-- more table data here -->
+		</tbody>
+	</table>
+	<div id="pagination"></div>
+	<script>
+		var table = document.getElementById("myTable");
+		var rows = table.rows.length - 1; // subtract 1 to exclude the header row
+		var rowsPerPage = 10;
+		var totalPages = Math.ceil(rows / rowsPerPage);
+		var currentPage = 1;
 
-<%
-    // Get the uploaded file
-    Part filePart = request.getPart("file");
-    InputStream fileContent = filePart.getInputStream();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(fileContent));
+		// hide all rows except the first 10
+		for (var i = rowsPerPage; i < rows; i++) {
+			table.rows[i].style.display = "none";
+		}
 
-    // Read the contents of the file
-    String line;
-    while ((line = reader.readLine()) != null) {
-        out.println(line);
-    }
+		// create pagination links
+		for (var i = 1; i <= totalPages; i++) {
+			var link = document.createElement("a");
+			link.setAttribute("href", "#");
+			link.setAttribute("class", "pagination");
+			link.innerHTML = i;
 
-    // Close the reader
-    reader.close();
-%>
+			link.onclick = function() {
+				var page = this.innerHTML;
+				var startIndex = (page - 1) * rowsPerPage;
+				var endIndex = startIndex + rowsPerPage;
 
+				for (var i = 0; i < rows; i++) {
+					if (i >= startIndex && i < endIndex) {
+						table.rows[i + 1].style.display = "";
+					} else {
+						table.rows[i + 1].style.display = "none";
+					}
+				}
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+				currentPage = page;
+				updatePaginationLinks();
+				return false;
+			};
 
-public class ReadFileExample {
-    public static void main(String[] args) {
-        String filePath = "path/to/your/file.txt";
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
+			document.getElementById("pagination").appendChild(link);
+		}
 
+		// highlight the current page link
+		function updatePaginationLinks() {
+			var links = document.getElementsByClassName("pagination");
+			for (var i = 0; i < links.length; i++) {
+				links[i
 
-
-
-String line;
-while ((line = reader.readLine()) != null) {
-    System.out.println(line);
-}
-
-
-
-
-
-
-
-@Controller
-public class FileUploadController {
-
-    @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-        try {
-            InputStream inputStream = file.getInputStream();
-            FilePrinter filePrinter = new FilePrinter();
-            filePrinter.print(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "redirect:/";
-    }
-}
-
-
-
-
-
-public class FilePrinter {
-
-    public void print(InputStream inputStream) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
-        reader.close();
-    }
-}
-
-
-
-
-
-
-@Configuration
-@EnableWebMvc
-public class AppConfig implements WebMvcConfigurer {
- 
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
- 
-    @Bean
-    public MultipartResolver multipartResolver() {
-        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-        resolver.setMaxUploadSize(10000000);
-        return resolver;
-    }
- 
-}
