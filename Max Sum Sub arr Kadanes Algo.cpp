@@ -101,3 +101,42 @@ String line;
 while ((line = reader.readLine()) != null) {
     System.out.println(line);
 }
+
+
+
+
+
+
+
+@Controller
+public class FileUploadController {
+
+    @PostMapping("/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
+        try {
+            InputStream inputStream = file.getInputStream();
+            FilePrinter filePrinter = new FilePrinter();
+            filePrinter.print(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/";
+    }
+}
+
+
+
+
+
+public class FilePrinter {
+
+    public void print(InputStream inputStream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+        reader.close();
+    }
+}
+
