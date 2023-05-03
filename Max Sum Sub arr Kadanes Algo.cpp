@@ -62,3 +62,24 @@ query.setParameter("username", username);
 query.setParameter("password", password);
 int result = query.executeUpdate();
 
+
+
+
+
+import java.io.*;
+
+public class SerializeObject {
+    public static void main(String[] args) throws IOException {
+        // Create an instance of the ObjectOutputStream class
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("data.obj"));
+
+        // Create an object of the Employee class
+        Employee emp = new Employee("John Doe", 35, "12345");
+
+        // Write the object to the stream
+        out.writeObject(emp);
+
+        // Close the stream
+        out.close();
+    }
+}
