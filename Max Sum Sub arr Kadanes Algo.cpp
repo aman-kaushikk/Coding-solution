@@ -145,3 +145,66 @@ Type information: This includes information about the types of the object's inst
 Object references: If the object being serialized contains references to other objects, those objects are also serialized, and their references are included in the serialized data.
 
 Overall, during serialization, the entire object graph is saved in the file, including the object being serialized and all the related objects that are reachable from the serialized object. When the object is deserialized, the entire object graph is reconstructed from the serialized data.
+
+
+
+
+
+import java.io.*;
+import java.sql.*;
+
+public class ResultSetToHtmlTable {
+   public static void main(String[] args) {
+      String url = "jdbc:mysql://localhost:3306/mydatabase";
+      String username = "root";
+      String password = "password";
+      String query = "SELECT * FROM mytable";
+
+      try {
+         // Connect to database
+         Connection conn = DriverManager.getConnection(url, username, password);
+
+         // Execute query
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(query);
+
+         // Create PrintWriter to write HTML output
+         PrintWriter out = new PrintWriter("output.html");
+
+         // Start HTML table
+         out.println("<table>");
+         
+         // Add table headers
+         ResultSetMetaData rsmd = rs.getMetaData();
+         int columnCount = rsmd.getColumnCount();
+         out.println("<tr>");
+         for (int i = 1; i <= columnCount; i++) {
+            out.println("<th>" + rsmd.getColumnName(i) + "</th>");
+         }
+         out.println("</tr>");
+         
+         // Add table data
+         while (rs.next()) {
+            out.println("<tr>");
+            for (int i = 1; i <= columnCount; i++) {
+               out.println("<td>" + rs.getString(i) + "</td>");
+            }
+            out.println("</tr>");
+         }
+         
+         // End HTML table
+         out.println("</table>");
+
+         // Close resources
+         rs.close();
+         stmt.close();
+         conn.close();
+         out.close();
+
+         System.out.println("HTML table created successfully!");
+
+      } catch (SQLException | IOException e) {
+         e.printStackTrace();
+      }
+   }
+}
