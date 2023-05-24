@@ -357,6 +357,116 @@ public class ImageCapture {
 
 
 
+import javafx.application.Application;
+
+import javafx.embed.swing.SwingFXUtils;
+
+import javafx.scene.Group;
+
+import javafx.scene.Scene;
+
+import javafx.scene.SnapshotParameters;
+
+import javafx.scene.control.Button;
+
+import javafx.scene.image.WritableImage;
+
+import javafx.stage.Stage;
+
+import javax.imageio.ImageIO;
+
+import java.io.File;
+
+import java.io.IOException;
+
+public class ImageCapture extends Application {
+
+    private static final String FOLDER_PATH = "/path/to/folder"; // Specify the folder path here
+
+    private int imageCount = 0;
+
+    private int totalImages = 50;
+
+    public static void main(String[] args) {
+
+        launch(args);
+
+    }
+
+    @Override
+
+    public void start(Stage primaryStage) {
+
+        primaryStage.setTitle("Image Capture");
+
+        Button captureButton = new Button("Capture Image");
+
+        captureButton.setLayoutX(10);
+
+        captureButton.setLayoutY(10);
+
+        captureButton.setOnAction(event -> {
+
+            if (imageCount < totalImages) {
+
+                captureImage();
+
+            } else {
+
+                System.out.println("Image capture completed.");
+
+            }
+
+        });
+
+        Group root = new Group();
+
+        root.getChildren().add(captureButton);
+
+        Scene scene = new Scene(root, 300, 200);
+
+        primaryStage.setScene(scene);
+
+        primaryStage.show();
+
+    }
+
+    private void captureImage() {
+
+        try {
+
+            // Capture the screen as a WritableImage
+
+            WritableImage writableImage = new WritableImage((int) getWidth(), (int) getHeight());
+
+            SnapshotParameters parameters = new SnapshotParameters();
+
+            parameters.setDepthBuffer(true);
+
+            parameters.setFill(javafx.scene.paint.Color.TRANSPARENT);
+
+            getRoot().snapshot(parameters, writableImage);
+
+            // Save the image to the specified folder
+
+            String imageName = "image" + (++imageCount) + ".png"; // Image filename
+
+            File outputFile = new File(FOLDER_PATH, imageName);
+
+            ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", outputFile);
+
+            System.out.println("Image saved: " + imageName);
+
+        } catch (IOException e) {
+
+            System.out.println("Error saving image: " + e.getMessage());
+
+        }
+
+    }
+
+}
+
 
 
 
