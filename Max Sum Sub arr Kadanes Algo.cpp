@@ -569,3 +569,88 @@ public class ImageCapture {
 
 
 
+import org.bytedeco.javacv.*;
+
+import javax.imageio.ImageIO;
+
+import java.io.File;
+
+import java.io.IOException;
+
+public class WebcamCapture {
+
+    private static final String FOLDER_PATH = "/path/to/folder"; // Specify the folder path here
+
+    private int imageCount = 0;
+
+    private int totalImages = 50;
+
+    public static void main(String[] args) {
+
+        WebcamCapture webcamCapture = new WebcamCapture();
+
+        webcamCapture.captureImages();
+
+    }
+
+    private void captureImages() {
+
+        FrameGrabber grabber = new OpenCVFrameGrabber(0); // 0 represents the default webcam
+
+        try {
+
+            grabber.start();
+
+            CanvasFrame canvasFrame = new CanvasFrame("Webcam Capture", CanvasFrame.getDefaultGamma() / grabber.getGamma());
+
+            canvasFrame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+
+            while (imageCount < totalImages) {
+
+                Frame frame = grabber.grab();
+
+                canvasFrame.showImage(frame);
+
+                if (frame != null) {
+
+                    String imageName = "image" + (++imageCount) + ".png"; // Image filename
+
+                    File outputFile = new File(FOLDER_PATH, imageName);
+
+                    ImageIO.write(FrameToBufferedImage(frame), "png", outputFile);
+
+                    System.out.println("Image saved: " + imageName);
+
+                }
+
+            }
+
+            canvasFrame.dispose();
+
+            grabber.stop();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+    }
+
+    private static java.awt.image.BufferedImage FrameToBufferedImage(Frame frame) {
+
+        if (frame == null) {
+
+            return null;
+
+        }
+
+        Java2DFrameConverter converter = new Java2DFrameConverter();
+
+        return converter.getBufferedImage(frame, 1.0);
+
+    }
+
+}
+
+
