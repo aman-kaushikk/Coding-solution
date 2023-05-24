@@ -621,113 +621,55 @@ public class WebcamCapture {
 
                     System.out.println("Image saved: " + imageName);
 
-                }
+ 
 
-            }
+    
+import cv2
 
-            canvasFrame.dispose();
+folder_path = "/path/to/folder"  # Specify the folder path here
 
-            grabber.stop();
+image_count = 0
 
-        } catch (Exception e) {
+total_images = 50
 
-            e.printStackTrace();
+# Initialize webcam
 
-        }
+capture = cv2.VideoCapture(0)
 
-    }
+while image_count < total_images:
 
-    private static java.awt.image.BufferedImage FrameToBufferedImage(Frame frame) {
+    ret, frame = capture.read()
 
-        if (frame == null) {
+    if ret:
 
-            return null;
+        # Display the captured frame
 
-        }
+        cv2.imshow("Webcam", frame)
 
-        Java2DFrameConverter converter = new Java2DFrameConverter();
+        # Save the frame as an image file
 
-        return converter.getBufferedImage(frame, 1.0);
+        image_name = f"image{image_count}.png"
 
-    }
+        file_path = folder_path + "/" + image_name
 
-}
+        cv2.imwrite(file_path, frame)
+
+        print("Image saved:", image_name)
+
+        image_count += 1
+
+    # Break the loop if 'q' is pressed
+
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+
+        break
+
+# Release the webcam and close windows
+
+capture.release()
+
+cv2.destroyAllWindows()
 
 
-
-import com.github.sarxos.webcam.Webcam;
-
-import com.github.sarxos.webcam.WebcamResolution;
-
-import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDriver;
-
-import javax.imageio.ImageIO;
-
-import java.io.File;
-
-import java.io.IOException;
-
-public class WebcamCapture {
-
-    private static final String FOLDER_PATH = "/path/to/folder"; // Specify the folder path here
-
-    private int imageCount = 0;
-
-    private int totalImages = 50;
-
-    public static void main(String[] args) {
-
-        WebcamCapture webcamCapture = new WebcamCapture();
-
-        webcamCapture.captureImages();
-
-    }
-
-    private void captureImages() {
-
-        Webcam.setDriver(new WebcamDefaultDriver()); // Set the default webcam driver
-
-        Webcam webcam = Webcam.getDefault(); // Get the default webcam
-
-        webcam.setViewSize(WebcamResolution.VGA.getSize()); // Set the capture resolution (VGA in this example)
-
-        webcam.open(); // Open the webcam for capturing
-
-        while (imageCount < totalImages) {
-
-            try {
-
-                // Capture an image from the webcam
-
-                String imageName = "image" + (++imageCount) + ".png"; // Image filename
-
-                File outputFile = new File(FOLDER_PATH, imageName);
-
-                ImageIO.write(webcam.getImage(), "PNG", outputFile);
-
-                System.out.println("Image saved: " + imageName);
-
-            } catch (IOException e) {
-
-                System.out.println("Error saving image: " + e.getMessage());
-
-            }
-
-            try {
-
-                Thread.sleep(1000); // Wait for 1 second before capturing the next image
-
-            } catch (InterruptedException e) {
-
-                e.printStackTrace();
-
-            }
-
-        }
-
-        webcam.close(); // Close the webcam
-
-    }
-
-}
+        
 
