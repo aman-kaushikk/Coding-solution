@@ -654,3 +654,80 @@ public class WebcamCapture {
 }
 
 
+
+import com.github.sarxos.webcam.Webcam;
+
+import com.github.sarxos.webcam.WebcamResolution;
+
+import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDriver;
+
+import javax.imageio.ImageIO;
+
+import java.io.File;
+
+import java.io.IOException;
+
+public class WebcamCapture {
+
+    private static final String FOLDER_PATH = "/path/to/folder"; // Specify the folder path here
+
+    private int imageCount = 0;
+
+    private int totalImages = 50;
+
+    public static void main(String[] args) {
+
+        WebcamCapture webcamCapture = new WebcamCapture();
+
+        webcamCapture.captureImages();
+
+    }
+
+    private void captureImages() {
+
+        Webcam.setDriver(new WebcamDefaultDriver()); // Set the default webcam driver
+
+        Webcam webcam = Webcam.getDefault(); // Get the default webcam
+
+        webcam.setViewSize(WebcamResolution.VGA.getSize()); // Set the capture resolution (VGA in this example)
+
+        webcam.open(); // Open the webcam for capturing
+
+        while (imageCount < totalImages) {
+
+            try {
+
+                // Capture an image from the webcam
+
+                String imageName = "image" + (++imageCount) + ".png"; // Image filename
+
+                File outputFile = new File(FOLDER_PATH, imageName);
+
+                ImageIO.write(webcam.getImage(), "PNG", outputFile);
+
+                System.out.println("Image saved: " + imageName);
+
+            } catch (IOException e) {
+
+                System.out.println("Error saving image: " + e.getMessage());
+
+            }
+
+            try {
+
+                Thread.sleep(1000); // Wait for 1 second before capturing the next image
+
+            } catch (InterruptedException e) {
+
+                e.printStackTrace();
+
+            }
+
+        }
+
+        webcam.close(); // Close the webcam
+
+    }
+
+}
+
