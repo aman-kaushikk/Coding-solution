@@ -300,6 +300,59 @@ public class ImageCapture {
 
 
       
+import org.bytedeco.javacpp.opencv_core;
+import org.bytedeco.javacpp.opencv_videoio.VideoCapture;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+public class ImageCapture {
+
+    private static final String FOLDER_PATH = "/path/to/folder"; // Specify the folder path here
+    private static final String IMAGE_FORMAT = "png";
+
+    public static void main(String[] args) {
+        int imageCount = 50; // Number of images to capture
+
+        for (int i = 1; i <= imageCount; i++) {
+            String imageName = "image" + i + "." + IMAGE_FORMAT; // Image filename
+            captureAndSaveImage(imageName);
+        }
+    }
+
+    private static void captureAndSaveImage(String imageName) {
+        try {
+            // Open the default camera
+            VideoCapture videoCapture = new VideoCapture(0);
+
+            // Check if the camera is opened successfully
+            if (videoCapture.isOpened()) {
+                // Read the current frame from the camera
+                opencv_core.Mat frame = new opencv_core.Mat();
+                videoCapture.read(frame);
+
+                // Convert the frame to a BufferedImage
+                BufferedImage image = Java2DFrameConverter.convert(frame);
+
+                // Save the image to the specified folder
+                File outputFile = new File(FOLDER_PATH, imageName);
+                ImageIO.write(image, IMAGE_FORMAT, outputFile);
+
+                System.out.println("Image saved: " + imageName);
+
+                // Release resources
+                frame.release();
+                videoCapture.release();
+            } else {
+                System.out.println("Failed to open camera");
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving image: " + e.getMessage());
+        }
+    }
+}
 
 
 
