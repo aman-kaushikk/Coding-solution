@@ -471,4 +471,101 @@ public class ImageCapture extends Application {
 
 
 
+import java.awt.*;
+
+import java.awt.image.BufferedImage;
+
+import java.io.File;
+
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import javax.swing.*;
+
+public class ImageCapture {
+
+    private static final String FOLDER_PATH = "/path/to/folder"; // Specify the folder path here
+
+    private int imageCount = 0;
+
+    private int totalImages = 50;
+
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(() -> {
+
+            ImageCapture imageCapture = new ImageCapture();
+
+            imageCapture.start();
+
+        });
+
+    }
+
+    private void start() {
+
+        JFrame frame = new JFrame("Image Capture");
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JButton captureButton = new JButton("Capture Image");
+
+        captureButton.addActionListener(e -> {
+
+            if (imageCount < totalImages) {
+
+                captureImage();
+
+            } else {
+
+                System.out.println("Image capture completed.");
+
+            }
+
+        });
+
+        frame.getContentPane().add(captureButton);
+
+        frame.pack();
+
+        frame.setVisible(true);
+
+    }
+
+    private void captureImage() {
+
+        try {
+
+            // Create a Robot instance to capture the screen
+
+            Robot robot = new Robot();
+
+            // Capture the screen as a BufferedImage
+
+            Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+
+            BufferedImage image = robot.createScreenCapture(screenRect);
+
+            // Save the image to the specified folder
+
+            String imageName = "image" + (++imageCount) + ".png"; // Image filename
+
+            File outputFile = new File(FOLDER_PATH, imageName);
+
+            ImageIO.write(image, "png", outputFile);
+
+            System.out.println("Image saved: " + imageName);
+
+        } catch (AWTException | IOException e) {
+
+            System.out.println("Error saving image: " + e.getMessage());
+
+        }
+
+    }
+
+}
+
+
 
