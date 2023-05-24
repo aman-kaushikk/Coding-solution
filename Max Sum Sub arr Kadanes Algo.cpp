@@ -222,7 +222,80 @@ navigator.mediaDevices.getUserMedia({ video: true })
 
     console.log('Error accessing camera:', error);
 
-  });
+  })
+      
+      
+      
+      
+      import java.awt.image.BufferedImage;
+
+import java.io.File;
+
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class ImageCapture {
+
+    private static final String FOLDER_PATH = "/path/to/folder"; // Specify the folder path here
+
+    public static void main(String[] args) {
+
+        int imageCount = 50; // Number of images to capture
+
+        for (int i = 1; i <= imageCount; i++) {
+
+            String imageName = "image" + i + ".png"; // Image filename
+
+            captureAndSaveImage(imageName);
+
+        }
+
+    }
+
+    private static void captureAndSaveImage(String imageName) {
+
+        try {
+
+            // Capture image using your preferred method
+
+            BufferedImage image = captureImage();
+
+            // Save the image to the specified folder
+
+            File outputFile = new File(FOLDER_PATH, imageName);
+
+            ImageIO.write(image, "png", outputFile);
+
+            System.out.println("Image saved: " + imageName);
+
+        } catch (IOException e) {
+
+            System.out.println("Error saving image: " + e.getMessage());
+
+        }
+
+    }
+
+    // Implement the logic to capture an image using your preferred method
+
+    private static BufferedImage captureImage() {
+
+        // Replace this code with your image capture logic
+
+        // Example: Use libraries like OpenCV or JavaFX to capture an image from a camera or other sources
+
+        // You can also load an existing image using ImageIO.read() method
+
+        BufferedImage image = null;
+
+        // Capture image logic here...
+
+        return image;
+
+    }
+
+}
 
 
 
