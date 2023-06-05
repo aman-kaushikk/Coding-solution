@@ -672,4 +672,65 @@ cv2.destroyAllWindows()
 
 
         
+            
+            
+            <!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Live Clock</title>
+
+    <script>
+
+        function updateClock() {
+
+            var currentTime = new Date();
+
+            var hours = currentTime.getHours();
+
+            var minutes = currentTime.getMinutes();
+
+            var seconds = currentTime.getSeconds();
+
+            
+
+            // Pad single-digit numbers with leading zeros
+
+            hours = (hours < 10 ? "0" : "") + hours;
+
+            minutes = (minutes < 10 ? "0" : "") + minutes;
+
+            seconds = (seconds < 10 ? "0" : "") + seconds;
+
+            
+
+            var timeString = hours + ":" + minutes + ":" + seconds;
+
+            
+
+            document.getElementById("clock").innerHTML = timeString;
+
+        }
+
+        
+
+        // Update the clock every second
+
+        setInterval(updateClock, 1000);
+
+    </script>
+
+</head>
+
+<body>
+
+    <h1>Live Clock</h1>
+
+    <div id="clock"></div>
+
+</body>
+
+</html>
 
