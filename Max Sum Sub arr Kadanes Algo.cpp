@@ -733,4 +733,56 @@ cv2.destroyAllWindows()
 </body>
 
 </html>
+        
+        
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MyController {
+
+    @GetMapping("/authenticate")
+    public String authenticate(@CookieValue("cookieName") String cookieValue) {
+        // Perform authentication logic using the cookie value
+        // You can access the cookie value in the 'cookieValue' parameter
+
+        // Example authentication logic:
+        if ("validCookieValue".equals(cookieValue)) {
+            // Authentication successful
+            return "<html><body><h1>Authentication Successful</h1></body></html>";
+        } else {
+            // Authentication failed
+            return "<html><body><h1>Authentication Failed</h1></body></html>";
+        }
+    }
+}
+
+                    
+                    
+                    
+                    
+        
+fetch("/authenticate", {
+
+  headers: {
+
+    "Cookie": "cookieName=validCookieValue"
+
+  }
+
+})
+
+.then(response => response.text())
+
+.then(htmlResponse => {
+
+  // Process the HTML response
+
+  console.log(htmlResponse);
+
+});
+
+        
+        
 
