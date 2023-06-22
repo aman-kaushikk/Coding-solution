@@ -783,6 +783,140 @@ fetch("/authenticate", {
 
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Customer Form</h1>
+    <form id="customerForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <h3>Addresses</h3>
+        <div id="addressContainer">
+            <div class="address">
+                <label for="street">Street:</label>
+                <input type="text" name="addresses[0].street" required>
+                <label for="city">City:</label>
+                <input type="text" name="addresses[0].city" required>
+                <label for="state">State:</label>
+                <input type="text" name="addresses[0].state" required>
+                <label for="postalCode">Postal Code:</label>
+                <input type="text" name="addresses[0].postalCode" required>
+            </div>
+        </div>
+        <br>
+        <button type="button" onclick="addAddress()">Add Address</button>
+        <button type="submit">Save</button>
+    </form>
+    <br>
+    <h3>Search</h3>
+    <input type="text" id="searchName" placeholder="Search by name">
+    <button type="button" onclick="searchCustomers()">Search</button>
+
+    <div id="customerList"></div>
+
+    <script>
+        function addAddress() {
+            const addressContainer = $("#addressContainer");
+
+            const addressIndex = addressContainer.children().length;
+            const newAddressDiv = $("<div class='address'>");
+            const addressFields = `
+                <label for="street">Street:</label>
+                <input type="text" name="addresses[${addressIndex}].street" required>
+                <label for="city">City:</label>
+                <input type="text" name="addresses[${addressIndex}].city" required>
+                <label for="state">State:</label>
+                <input type="text" name="addresses[${addressIndex}].state" required>
+                <label for="postalCode">Postal Code:</label>
+                <input type="text" name="addresses[${addressIndex}].postalCode" required>
+            `;
+
+            newAddressDiv.html(addressFields);
+
+            addressContainer.append(newAddressDiv);
+        }
+
+        function searchCustomers() {
+            const searchName = $("#searchName").val();
+
+            $.ajax({
+                url: "/customer/search",
+                type: "GET",
+                data: { name: searchName },
+                success: function(data) {
+                    displayCustomers(data);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function displayCustomers(customers) {
+            const customerList = $("#customerList");
+            customerList.empty();
+
+            customers.forEach(function(customer) {
+                const customerDiv = $("<div>");
+                const customerName = $("<h4>").text("Name: " + customer.name);
+                
+                const addressesDiv = $("<div>");
+                customer.addresses.forEach(function(address) {
+                    const addressText = $("<p>").text("Address: " + address.street + ", " + address.city + ", " + address.state + ", " + address.postalCode);
+                    addressesDiv.append(addressText);
+                });
+                
+                customerDiv.append(customerName, addressesDiv);
+                customerList.append(customerDiv);
+            });
+        }
+
+        $("#customerForm").submit(function(event) {
+            event.preventDefault();
+
+            const formData = $(this).serialize();
+
+            $.ajax({
+                url: "/customer",
+                type: "POST",
+                data: formData,
+                success: function(data) {
+                    alert("Customer saved successfully");
+                    $("#customerForm")[0].reset();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
         
         
 
