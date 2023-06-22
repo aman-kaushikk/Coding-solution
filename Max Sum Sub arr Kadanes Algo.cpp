@@ -917,6 +917,67 @@ fetch("/authenticate", {
 
 
 
-        
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Student Form</h1>
+    <form id="studentForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="college">College:</label>
+        <input type="text" id="college" name="college" required>
+        <br>
+        <label for="course">Course:</label>
+        <input type="text" id="course" name="course" required>
+        <br>
+        <h3>Address</h3>
+        <label for="addressLine1">Address Line 1:</label>
+        <input type="text" id="addressLine1" name="address.addressLine1" required>
+        <br>
+        <label for="addressLine2">Address Line 2:</label>
+        <input type="text" id="addressLine2" name="address.addressLine2">
+        <br>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="address.city" required>
+        <br>
+        <label for="state">State:</label>
+        <input type="text" id="state" name="address.state" required>
+        <br>
+        <label for="zip">ZIP Code:</label>
+        <input type="text" id="zip" name="address.zip" required>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+
+    <script>
+        $("#studentForm").submit(function(event) {
+            event.preventDefault();
+
+            const formData = $(this).serialize();
+
+            $.ajax({
+                url: "/student",
+                type: "POST",
+                data: formData,
+                success: function(data) {
+                    alert("Student saved successfully");
+                    $("#studentForm")[0].reset();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
         
 
